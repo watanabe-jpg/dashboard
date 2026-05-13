@@ -146,6 +146,7 @@
   .loading-text { font-size: var(--base-font-size); color: var(--text3); padding: 1rem 0; font-style: italic; }
   .empty-text { font-size: var(--base-font-size); color: var(--text3); padding: 0.75rem 0; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 </style>
 </head>
 <body>
@@ -299,7 +300,13 @@
   <main class="main">
     <div class="panels">
       <div class="panel">
-        <div class="panel-header"><span class="panel-title">新着メール（受信トレイ）</span><span class="badge" id="mailBadge">—</span></div>
+        <div class="panel-header">
+          <span class="panel-title">新着メール（受信トレイ）</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="badge" id="mailBadge">—</span>
+            <button id="mailRefreshBtn" onclick="refreshMail()" title="今すぐ更新" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:14px;padding:0;line-height:1;transition:color 0.15s" onmouseover="this.style.color='var(--text2)'" onmouseout="this.style.color='var(--text3)'">↻</button>
+          </div>
+        </div>
         <div class="panel-body" id="mailBody"><div class="loading-text">読み込み中...</div></div>
       </div>
       <div class="panel">
@@ -523,7 +530,18 @@ async function startAuth(){
   });
   tokenClient.requestAccessToken();
 }
-function showApp(){document.getElementById('authScreen').style.display='none';document.getElementById('mainApp').style.display='grid';loadMail();loadCalendar();}
+function showApp(){document.getElementById('authScreen').style.display='none';document.getElementById('mainApp').style.display='grid';loadMail();loadCalendar();setInterval(refreshMail,5*60*1000);}
+
+let mailRefreshing=false;
+async function refreshMail(){
+  if(mailRefreshing)return;
+  mailRefreshing=true;
+  const btn=document.getElementById('mailRefreshBtn');
+  if(btn){btn.style.animation='spin 0.6s linear';btn.style.display='inline-block';}
+  await loadMail();
+  mailRefreshing=false;
+  if(btn){btn.style.animation='';}
+}
 function signOut(){accessToken=null;clearToken();document.getElementById('authScreen').style.display='flex';document.getElementById('mainApp').style.display='none';}
 
 // GMAIL
