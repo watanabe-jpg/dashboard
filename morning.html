@@ -12,15 +12,16 @@
     --bg2: #eceae4;
     --bg3: #e2e0d8;
     --text: #1a1916;
-    --text2: #6b6860;
-    --text3: #a09e99;
+    --text2: #4a4845;
+    --text3: #7a7875;
     --accent: #2d4a3e;
     --accent2: #4a7c68;
-    --border: #d4d2ca;
-    --border2: #c4c2ba;
+    --border: #cbc9c1;
+    --border2: #b8b6ae;
     --white: #faf9f6;
     --sidebar-width: 280px;
     --base-font-size: 14px;
+    --ui-scale: 1;
     --body-font: 'Noto Sans JP', sans-serif;
     --clock-font: 'DM Serif Display', serif;
     --clock-size: 56px;
@@ -30,65 +31,86 @@
   body { background: var(--bg); color: var(--text); font-family: var(--body-font); font-size: var(--base-font-size); min-height: 100vh; }
 
   .shell { display: grid; grid-template-columns: var(--sidebar-width) 1fr; grid-template-rows: auto 1fr; min-height: 100vh; }
-  .sidebar { grid-row: 1 / 3; background: var(--white); border-right: 1px solid var(--border); padding: 2.5rem 1.75rem; display: flex; flex-direction: column; gap: 1.75rem; overflow-y: auto; }
-  .topbar { background: var(--bg); border-bottom: 1px solid var(--border); padding: 1.25rem 2rem; display: flex; align-items: center; justify-content: space-between; }
-  .main { padding: 1.75rem 2rem; overflow-y: auto; }
+  .sidebar { grid-row: 1 / 3; background: var(--white); border-right: 1px solid var(--border); padding: 2rem 1.75rem 1.25rem; display: flex; flex-direction: column; gap: 1.5rem; overflow-y: auto; }
+  .topbar { background: var(--bg); border-bottom: 1px solid var(--border); padding: 1.1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+  .main { padding: 1.5rem 2rem; overflow-y: auto; }
 
+  /* CLOCK */
   .time { font-family: var(--clock-font); font-size: var(--clock-size); line-height: 1; color: var(--text); letter-spacing: -2px; transition: font-size 0.2s; }
-  .date { font-size: 11px; letter-spacing: 0.06em; color: var(--text3); margin-top: 5px; }
-  .section-label { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text3); margin-bottom: 9px; }
+  .date { font-size: calc(var(--base-font-size) * 0.8); letter-spacing: 0.06em; color: var(--text2); margin-top: 5px; }
 
-  .settings-toggle { background: none; border: none; font-family: var(--body-font); font-size: 10px; color: var(--text3); cursor: pointer; padding: 0; letter-spacing: 0.05em; transition: color 0.15s; display: flex; align-items: center; gap: 4px; }
-  .settings-toggle:hover { color: var(--text2); }
-  .settings-panel { display: none; flex-direction: column; gap: 12px; padding: 12px; background: var(--bg2); border-radius: 8px; border: 1px solid var(--border); margin-top: 6px; }
-  .settings-panel.open { display: flex; }
-  .sp-label { font-size: 10px; color: var(--text3); margin-bottom: 5px; }
-  .sp-row { display: flex; align-items: center; gap: 8px; }
-  .sp-val { font-size: 11px; color: var(--text2); min-width: 38px; }
-  .sp-slider { flex: 1; accent-color: var(--accent); cursor: pointer; }
-  .sp-btns { display: flex; flex-wrap: wrap; gap: 4px; }
-  .sp-btn { padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); background: var(--white); font-size: 11px; cursor: pointer; color: var(--text2); transition: all 0.15s; font-family: var(--body-font); }
-  .sp-btn:hover { border-color: var(--accent2); color: var(--accent); }
-  .sp-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .sp-divider { height: 1px; background: var(--border); margin: 2px 0; }
-  .sp-color-row { display: flex; align-items: center; gap: 8px; }
-  .sp-color-input { width: 32px; height: 24px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; padding: 1px; background: var(--white); }
-  .sp-color-label { font-size: 11px; color: var(--text2); flex: 1; }
-  .sp-presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px; }
-  .sp-preset { width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: border-color 0.15s; }
-  .sp-preset:hover { border-color: var(--text2); }
-  .sp-reset { font-size: 10px; color: var(--text3); background: none; border: none; cursor: pointer; font-family: var(--body-font); padding: 0; text-decoration: underline; text-underline-offset: 2px; }
-  .sp-reset:hover { color: var(--text2); }
+  /* LABELS */
+  .section-label { font-size: calc(var(--base-font-size) * 0.78); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 8px; font-weight: 500; }
 
-  .focus-block { border-top: 1px solid var(--border); padding-top: 1.5rem; }
+  /* FOCUS / MEMO */
+  .memo-block { border-top: 1px solid var(--border); padding-top: 1.25rem; }
+  .memo-desc { font-size: calc(var(--base-font-size) * 0.8); color: var(--text3); margin-bottom: 6px; line-height: 1.5; }
   .focus-input { width: 100%; background: transparent; border: none; border-bottom: 1px solid var(--border2); padding: 5px 0; font-size: var(--base-font-size); font-family: var(--body-font); color: var(--text); outline: none; transition: border-color 0.2s; }
   .focus-input:focus { border-bottom-color: var(--accent); }
   .focus-input::placeholder { color: var(--text3); font-style: italic; }
 
-  .tasks-block { border-top: 1px solid var(--border); padding-top: 1.5rem; flex: 1; }
+  /* TASKS */
+  .tasks-block { border-top: 1px solid var(--border); padding-top: 1.25rem; flex: 1; }
   .task-add-row { display: flex; gap: 6px; margin-bottom: 10px; }
-  .task-input { flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; font-size: 13px; font-family: var(--body-font); color: var(--text); outline: none; transition: border-color 0.2s; }
+  .task-input { flex: 1; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 7px 10px; font-size: var(--base-font-size); font-family: var(--body-font); color: var(--text); outline: none; transition: border-color 0.2s; }
   .task-input:focus { border-color: var(--accent2); }
   .task-input::placeholder { color: var(--text3); }
-  .add-btn { background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 7px 13px; font-size: 16px; cursor: pointer; line-height: 1; transition: background 0.2s; }
+  .task-date-input { width: 100%; background: var(--bg2); border: 1px solid var(--border); border-radius: 6px; padding: 5px 10px; font-size: calc(var(--base-font-size) * 0.85); font-family: var(--body-font); color: var(--text2); outline: none; margin-top: 4px; transition: border-color 0.2s; }
+  .task-date-input:focus { border-color: var(--accent2); }
+  .add-btn { background: var(--accent); color: #fff; border: none; border-radius: 6px; padding: 7px 13px; font-size: 16px; cursor: pointer; line-height: 1; transition: background 0.2s; align-self: flex-start; }
   .add-btn:hover { background: var(--accent2); }
+  .task-add-fields { flex: 1; display: flex; flex-direction: column; }
   .task-list { display: flex; flex-direction: column; gap: 3px; }
-  .task-item { display: flex; align-items: flex-start; gap: 8px; padding: 6px 8px; border-radius: 6px; transition: background 0.15s; cursor: pointer; }
+  .task-item { display: flex; align-items: flex-start; gap: 8px; padding: 7px 8px; border-radius: 6px; transition: background 0.15s; }
   .task-item:hover { background: var(--bg2); }
-  .task-item.done { opacity: 0.45; }
+  .task-item.done { opacity: 0.4; }
   .task-cb { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--border2); flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; cursor: pointer; }
   .task-item.done .task-cb { background: var(--accent); border-color: var(--accent); }
   .task-item.done .task-cb::after { content: ''; width: 5px; height: 3px; border-left: 1.5px solid #fff; border-bottom: 1.5px solid #fff; transform: rotate(-45deg) translateY(-1px); display: block; }
-  .task-text { font-size: 13px; line-height: 1.4; flex: 1; }
+  .task-body { flex: 1; min-width: 0; }
+  .task-text { font-size: var(--base-font-size); line-height: 1.4; color: var(--text); }
   .task-item.done .task-text { text-decoration: line-through; color: var(--text3); }
-  .task-del { background: none; border: none; color: var(--text3); cursor: pointer; font-size: 14px; padding: 0 2px; opacity: 0; transition: opacity 0.15s; line-height: 1; }
+  .task-due { font-size: calc(var(--base-font-size) * 0.78); color: var(--text3); margin-top: 2px; display: flex; align-items: center; gap: 3px; }
+  .task-due.overdue { color: #c0392b; }
+  .task-due.today { color: var(--accent); font-weight: 500; }
+  .task-del { background: none; border: none; color: var(--text3); cursor: pointer; font-size: 14px; padding: 0 2px; opacity: 0; transition: opacity 0.15s; line-height: 1; flex-shrink: 0; }
   .task-item:hover .task-del { opacity: 1; }
 
+  /* BOTTOM CONTROLS */
+  .sidebar-bottom { margin-top: auto; padding-top: 1rem; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 4px; }
+  .ctrl-btn { background: none; border: none; font-family: var(--body-font); font-size: calc(var(--base-font-size) * 0.82); color: var(--text3); cursor: pointer; padding: 5px 4px; letter-spacing: 0.04em; transition: color 0.15s; display: flex; align-items: center; gap: 5px; text-align: left; width: 100%; border-radius: 5px; }
+  .ctrl-btn:hover { color: var(--text2); background: var(--bg2); }
+
+  /* SETTINGS OVERLAY */
+  .settings-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 200; align-items: flex-end; justify-content: flex-start; }
+  .settings-overlay.open { display: flex; }
+  .settings-drawer { background: var(--white); border: 1px solid var(--border); border-radius: 12px; margin: 0 0 70px calc(var(--sidebar-width) - 260px); width: 260px; max-height: 80vh; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }
+  .drawer-title { font-size: calc(var(--base-font-size) * 0.78); font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .sp-label { font-size: calc(var(--base-font-size) * 0.8); color: var(--text2); margin-bottom: 5px; font-weight: 500; }
+  .sp-row { display: flex; align-items: center; gap: 8px; }
+  .sp-val { font-size: calc(var(--base-font-size) * 0.8); color: var(--text2); min-width: 38px; }
+  .sp-slider { flex: 1; accent-color: var(--accent); cursor: pointer; }
+  .sp-btns { display: flex; flex-wrap: wrap; gap: 4px; }
+  .sp-btn { padding: 4px 10px; border-radius: 4px; border: 1px solid var(--border); background: var(--bg); font-size: calc(var(--base-font-size) * 0.82); cursor: pointer; color: var(--text2); transition: all 0.15s; font-family: var(--body-font); }
+  .sp-btn:hover { border-color: var(--accent2); color: var(--accent); }
+  .sp-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .sp-divider { height: 1px; background: var(--border); }
+  .sp-color-row { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+  .sp-color-input { width: 30px; height: 22px; border: 1px solid var(--border); border-radius: 4px; cursor: pointer; padding: 1px; background: var(--white); }
+  .sp-color-label { font-size: calc(var(--base-font-size) * 0.82); color: var(--text2); flex: 1; }
+  .sp-presets { display: flex; flex-wrap: wrap; gap: 6px; }
+  .sp-preset { width: 22px; height: 22px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; transition: border-color 0.15s; }
+  .sp-preset:hover { border-color: var(--text2); }
+  .sp-reset { font-size: calc(var(--base-font-size) * 0.8); color: var(--text3); background: none; border: none; cursor: pointer; font-family: var(--body-font); padding: 2px 0; text-decoration: underline; text-underline-offset: 2px; }
+  .sp-reset:hover { color: var(--text2); }
+
+  /* QUICK LINKS */
   .qlinks { display: flex; gap: 8px; }
-  .qlink { display: flex; align-items: center; gap: 6px; padding: 5px 13px; background: var(--white); border: 1px solid var(--border); border-radius: 20px; font-size: 12px; font-weight: 500; color: var(--text2); text-decoration: none; transition: all 0.15s; font-family: var(--body-font); cursor: pointer; }
-  .qlink:hover { background: var(--bg2); color: var(--text); border-color: var(--border2); }
+  .qlink { display: flex; align-items: center; gap: 6px; padding: 5px 13px; background: var(--white); border: 1px solid var(--border); border-radius: 20px; font-size: calc(var(--base-font-size) * 0.85); font-weight: 500; color: var(--text2); text-decoration: none; transition: all 0.15s; font-family: var(--body-font); cursor: pointer; }
+  .qlink:hover { background: var(--bg2); color: var(--text); }
   .qlink svg { width: 13px; height: 13px; }
 
+  /* AUTH */
   #authScreen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 100; }
   .auth-card { background: var(--white); border: 1px solid var(--border); border-radius: 16px; padding: 3rem; text-align: center; max-width: 360px; width: 90%; }
   .auth-card .big-time { font-family: var(--clock-font); font-size: 52px; letter-spacing: -2px; color: var(--text); margin-bottom: 4px; }
@@ -97,32 +119,35 @@
   .google-btn { display: inline-flex; align-items: center; gap: 10px; background: var(--accent); color: #fff; border: none; border-radius: 8px; padding: 12px 24px; font-size: 14px; font-weight: 500; font-family: var(--body-font); cursor: pointer; transition: background 0.2s; width: 100%; justify-content: center; }
   .google-btn:hover { background: var(--accent2); }
 
+  /* PANELS */
   .panels { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
   .panel { background: var(--white); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; animation: fadeIn 0.35s ease both; }
   .panel:nth-child(2) { animation-delay: 0.07s; }
-  .panel-header { padding: 0.9rem 1.25rem 0.75rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-  .panel-title { font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text3); }
-  .panel-body { padding: 0.5rem 1.25rem 1rem; }
-  .badge { font-size: 10px; background: var(--bg2); color: var(--text2); padding: 2px 7px; border-radius: 10px; border: 1px solid var(--border); }
+  .panel-header { padding: 0.85rem 1.25rem 0.7rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+  .panel-title { font-size: calc(var(--base-font-size) * 0.78); letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); font-weight: 500; }
+  .panel-body { padding: 0.25rem 1.25rem 0.75rem; }
+  .badge { font-size: calc(var(--base-font-size) * 0.78); background: var(--bg2); color: var(--text2); padding: 2px 7px; border-radius: 10px; border: 1px solid var(--border); }
 
+  /* MAIL */
   .mail-item { padding: 9px 0; border-bottom: 1px solid var(--border); cursor: pointer; }
   .mail-item:last-child { border-bottom: none; }
   .mail-item:hover .mail-subject { color: var(--accent); }
-  .mail-from { font-size: 11px; color: var(--text3); margin-bottom: 2px; }
+  .mail-from { font-size: calc(var(--base-font-size) * 0.82); color: var(--text3); margin-bottom: 2px; }
   .mail-subject { font-size: var(--base-font-size); font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .mail-snippet { font-size: 12px; color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+  .mail-snippet { font-size: calc(var(--base-font-size) * 0.85); color: var(--text2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
   .mail-unread .mail-subject { color: var(--accent); }
   .unread-dot { display: inline-block; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; margin-right: 5px; vertical-align: middle; }
 
+  /* CALENDAR */
   .cal-item { display: flex; gap: 10px; align-items: flex-start; padding: 9px 0; border-bottom: 1px solid var(--border); }
   .cal-item:last-child { border-bottom: none; }
-  .cal-time { font-size: 11px; color: var(--text3); min-width: 44px; padding-top: 1px; }
+  .cal-time { font-size: calc(var(--base-font-size) * 0.82); color: var(--text3); min-width: 44px; padding-top: 2px; }
   .cal-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent2); flex-shrink: 0; margin-top: 4px; }
   .cal-title { font-size: var(--base-font-size); font-weight: 500; color: var(--text); }
-  .cal-loc { font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .cal-loc { font-size: calc(var(--base-font-size) * 0.82); color: var(--text3); margin-top: 2px; }
 
-  .loading-text { font-size: 13px; color: var(--text3); padding: 1rem 0; font-style: italic; }
-  .empty-text { font-size: 13px; color: var(--text3); padding: 0.75rem 0; }
+  .loading-text { font-size: var(--base-font-size); color: var(--text3); padding: 1rem 0; font-style: italic; }
+  .empty-text { font-size: var(--base-font-size); color: var(--text3); padding: 0.75rem 0; }
   @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 </style>
 </head>
@@ -140,114 +165,139 @@
   </div>
 </div>
 
+<!-- 設定ドロワー（時計） -->
+<div class="settings-overlay" id="clockOverlay" onclick="closeOverlay('clockOverlay')">
+  <div class="settings-drawer" onclick="event.stopPropagation()">
+    <div class="drawer-title">⚙ 時計</div>
+    <div>
+      <div class="sp-label">フォント</div>
+      <div class="sp-btns" id="clockFontBtns">
+        <button class="sp-btn" data-font="'DM Serif Display', serif" style="font-family:'DM Serif Display',serif">Serif</button>
+        <button class="sp-btn" data-font="'Playfair Display', serif" style="font-family:'Playfair Display',serif">Playfair</button>
+        <button class="sp-btn" data-font="'Syne', sans-serif" style="font-family:'Syne',sans-serif">Syne</button>
+        <button class="sp-btn" data-font="'Kaisei Opti', serif" style="font-family:'Kaisei Opti',serif">海星</button>
+        <button class="sp-btn" data-font="'Shippori Mincho', serif" style="font-family:'Shippori Mincho',serif">しっぽり</button>
+        <button class="sp-btn" data-font="'Noto Sans JP', sans-serif">Noto</button>
+      </div>
+    </div>
+    <div>
+      <div class="sp-label">サイズ　<span id="clockSizeVal">56px</span></div>
+      <div class="sp-row">
+        <span style="font-size:10px;color:var(--text3)">小</span>
+        <input class="sp-slider" type="range" id="clockSizeSlider" min="28" max="96" step="4" value="56">
+        <span style="font-size:10px;color:var(--text3)">大</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 設定ドロワー（テーマ） -->
+<div class="settings-overlay" id="themeOverlay" onclick="closeOverlay('themeOverlay')">
+  <div class="settings-drawer" onclick="event.stopPropagation()">
+    <div class="drawer-title">🎨 テーマ</div>
+
+    <div>
+      <div class="sp-label">プリセット</div>
+      <div class="sp-presets">
+        <div class="sp-preset" data-preset="default" title="デフォルト" style="background:#f5f3ef;border-color:#cbc9c1"></div>
+        <div class="sp-preset" data-preset="dark"    title="ダーク"     style="background:#1a1916"></div>
+        <div class="sp-preset" data-preset="blue"    title="ブルー"     style="background:#eef2f7"></div>
+        <div class="sp-preset" data-preset="warm"    title="ウォーム"   style="background:#fdf6ec"></div>
+        <div class="sp-preset" data-preset="mono"    title="モノ"       style="background:#f0f0f0"></div>
+      </div>
+    </div>
+
+    <div class="sp-divider"></div>
+
+    <div>
+      <div class="sp-label">本文フォント</div>
+      <div class="sp-btns" id="bodyFontBtns">
+        <button class="sp-btn" data-font="'Noto Sans JP', sans-serif">Noto</button>
+        <button class="sp-btn" data-font="'Shippori Mincho', serif" style="font-family:'Shippori Mincho',serif">しっぽり</button>
+        <button class="sp-btn" data-font="'Kaisei Opti', serif" style="font-family:'Kaisei Opti',serif">海星</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="sp-label">本文サイズ　<span id="baseSizeVal">14px</span></div>
+      <div class="sp-row">
+        <span style="font-size:10px;color:var(--text3)">小</span>
+        <input class="sp-slider" type="range" id="baseSizeSlider" min="11" max="20" step="1" value="14">
+        <span style="font-size:10px;color:var(--text3)">大</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="sp-label">UIサイズ　<span id="uiScaleVal">100%</span></div>
+      <div class="sp-row">
+        <span style="font-size:10px;color:var(--text3)">小</span>
+        <input class="sp-slider" type="range" id="uiScaleSlider" min="80" max="130" step="5" value="100">
+        <span style="font-size:10px;color:var(--text3)">大</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="sp-label">サイドバー幅　<span id="sidebarWidthVal">280px</span></div>
+      <div class="sp-row">
+        <span style="font-size:10px;color:var(--text3)">狭</span>
+        <input class="sp-slider" type="range" id="sidebarWidthSlider" min="200" max="420" step="10" value="280">
+        <span style="font-size:10px;color:var(--text3)">広</span>
+      </div>
+    </div>
+
+    <div class="sp-divider"></div>
+
+    <div>
+      <div class="sp-label">カラー</div>
+      <div class="sp-color-row"><input class="sp-color-input" type="color" id="colorBg"     value="#f5f3ef"><span class="sp-color-label">背景</span></div>
+      <div class="sp-color-row"><input class="sp-color-input" type="color" id="colorText"   value="#1a1916"><span class="sp-color-label">テキスト</span></div>
+      <div class="sp-color-row"><input class="sp-color-input" type="color" id="colorAccent" value="#2d4a3e"><span class="sp-color-label">アクセント</span></div>
+      <div class="sp-color-row"><input class="sp-color-input" type="color" id="colorWhite"  value="#faf9f6"><span class="sp-color-label">パネル背景</span></div>
+    </div>
+
+    <button class="sp-reset" onclick="resetTheme()">デフォルトに戻す</button>
+  </div>
+</div>
+
 <div class="shell" id="mainApp" style="display:none">
   <aside class="sidebar">
 
+    <!-- 時計 -->
     <div>
       <div class="time" id="mainClock">--:--</div>
       <div class="date" id="mainDate"></div>
-      <button class="settings-toggle" onclick="togglePanel('clockPanel')" style="margin-top:8px">⚙ 時計をカスタマイズ</button>
-      <div class="settings-panel" id="clockPanel">
-        <div>
-          <div class="sp-label">フォント</div>
-          <div class="sp-btns" id="clockFontBtns">
-            <button class="sp-btn" data-font="'DM Serif Display', serif" style="font-family:'DM Serif Display',serif">Serif</button>
-            <button class="sp-btn" data-font="'Playfair Display', serif" style="font-family:'Playfair Display',serif">Playfair</button>
-            <button class="sp-btn" data-font="'Syne', sans-serif" style="font-family:'Syne',sans-serif">Syne</button>
-            <button class="sp-btn" data-font="'Kaisei Opti', serif" style="font-family:'Kaisei Opti',serif">海星</button>
-            <button class="sp-btn" data-font="'Shippori Mincho', serif" style="font-family:'Shippori Mincho',serif">しっぽり</button>
-            <button class="sp-btn" data-font="'Noto Sans JP', sans-serif">Noto</button>
-          </div>
-        </div>
-        <div>
-          <div class="sp-label">サイズ　<span id="clockSizeVal">56px</span></div>
-          <div class="sp-row">
-            <span style="font-size:10px;color:var(--text3)">小</span>
-            <input class="sp-slider" type="range" id="clockSizeSlider" min="28" max="96" step="4" value="56">
-            <span style="font-size:10px;color:var(--text3)">大</span>
-          </div>
-        </div>
-      </div>
     </div>
 
-    <div style="border-top:1px solid var(--border);padding-top:1.5rem">
-      <button class="settings-toggle" onclick="togglePanel('themePanel')">🎨 テーマをカスタマイズ</button>
-      <div class="settings-panel" id="themePanel">
-
-        <div>
-          <div class="sp-label">プリセット</div>
-          <div class="sp-presets">
-            <div class="sp-preset" data-preset="default" title="デフォルト" style="background:#f5f3ef;border-color:#c4c2ba"></div>
-            <div class="sp-preset" data-preset="dark"    title="ダーク"     style="background:#1a1916"></div>
-            <div class="sp-preset" data-preset="blue"    title="ブルー"     style="background:#eef2f7"></div>
-            <div class="sp-preset" data-preset="warm"    title="ウォーム"   style="background:#fdf6ec"></div>
-            <div class="sp-preset" data-preset="mono"    title="モノ"       style="background:#f0f0f0"></div>
-          </div>
-        </div>
-
-        <div class="sp-divider"></div>
-
-        <div>
-          <div class="sp-label">本文フォント</div>
-          <div class="sp-btns" id="bodyFontBtns">
-            <button class="sp-btn" data-font="'Noto Sans JP', sans-serif">Noto</button>
-            <button class="sp-btn" data-font="'Shippori Mincho', serif" style="font-family:'Shippori Mincho',serif">しっぽり</button>
-            <button class="sp-btn" data-font="'Kaisei Opti', serif" style="font-family:'Kaisei Opti',serif">海星</button>
-          </div>
-        </div>
-
-        <div>
-          <div class="sp-label">本文サイズ　<span id="baseSizeVal">14px</span></div>
-          <div class="sp-row">
-            <span style="font-size:10px;color:var(--text3)">小</span>
-            <input class="sp-slider" type="range" id="baseSizeSlider" min="11" max="20" step="1" value="14">
-            <span style="font-size:10px;color:var(--text3)">大</span>
-          </div>
-        </div>
-
-        <div>
-          <div class="sp-label">サイドバー幅　<span id="sidebarWidthVal">280px</span></div>
-          <div class="sp-row">
-            <span style="font-size:10px;color:var(--text3)">狭</span>
-            <input class="sp-slider" type="range" id="sidebarWidthSlider" min="200" max="420" step="10" value="280">
-            <span style="font-size:10px;color:var(--text3)">広</span>
-          </div>
-        </div>
-
-        <div class="sp-divider"></div>
-
-        <div>
-          <div class="sp-label">カラー</div>
-          <div style="display:flex;flex-direction:column;gap:7px">
-            <div class="sp-color-row"><input class="sp-color-input" type="color" id="colorBg"     value="#f5f3ef"><span class="sp-color-label">背景</span></div>
-            <div class="sp-color-row"><input class="sp-color-input" type="color" id="colorText"   value="#1a1916"><span class="sp-color-label">テキスト</span></div>
-            <div class="sp-color-row"><input class="sp-color-input" type="color" id="colorAccent" value="#2d4a3e"><span class="sp-color-label">アクセント</span></div>
-            <div class="sp-color-row"><input class="sp-color-input" type="color" id="colorWhite"  value="#faf9f6"><span class="sp-color-label">パネル背景</span></div>
-          </div>
-        </div>
-
-        <button class="sp-reset" onclick="resetTheme()">デフォルトに戻す</button>
-      </div>
+    <!-- メモ -->
+    <div class="memo-block">
+      <div class="section-label">今日のメモ</div>
+      <div class="memo-desc">朝イチに決めること・一言など自由に</div>
+      <input class="focus-input" id="focusInput" type="text" placeholder="今日のテーマや一言を..." maxlength="100">
     </div>
 
-    <div class="focus-block">
-      <div class="section-label">今日のフォーカス</div>
-      <input class="focus-input" id="focusInput" type="text" placeholder="今日、一番大事なことは？" maxlength="100">
-    </div>
-
+    <!-- タスク -->
     <div class="tasks-block">
       <div class="section-label">タスク</div>
       <div class="task-add-row">
-        <input class="task-input" id="taskInput" type="text" placeholder="追加する..." maxlength="80">
+        <div class="task-add-fields">
+          <input class="task-input" id="taskInput" type="text" placeholder="タスクを追加..." maxlength="80">
+          <input class="task-date-input" id="taskDateInput" type="date">
+        </div>
         <button class="add-btn" id="addBtn">+</button>
       </div>
       <div class="task-list" id="taskList"></div>
     </div>
 
+    <!-- 左下：設定ボタン -->
+    <div class="sidebar-bottom">
+      <button class="ctrl-btn" onclick="openOverlay('clockOverlay')">⚙ 時計をカスタマイズ</button>
+      <button class="ctrl-btn" onclick="openOverlay('themeOverlay')">🎨 テーマをカスタマイズ</button>
+    </div>
+
   </aside>
 
   <header class="topbar">
-    <div style="font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3)">GOOD MORNING</div>
+    <div style="font-size:calc(var(--base-font-size) * 0.78);letter-spacing:0.1em;text-transform:uppercase;color:var(--text3)">GOOD MORNING</div>
     <div class="qlinks">
       <a class="qlink" href="https://mail.google.com" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Gmail</a>
       <a class="qlink" href="https://calendar.google.com" target="_blank"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Calendar</a>
@@ -259,7 +309,7 @@
   <main class="main">
     <div class="panels">
       <div class="panel">
-        <div class="panel-header"><span class="panel-title">新着メール</span><span class="badge" id="mailBadge">—</span></div>
+        <div class="panel-header"><span class="panel-title">新着メール（受信トレイ）</span><span class="badge" id="mailBadge">—</span></div>
         <div class="panel-body" id="mailBody"><div class="loading-text">読み込み中...</div></div>
       </div>
       <div class="panel">
@@ -306,33 +356,59 @@ focusInput.value=state.focus;
 focusInput.addEventListener('input',()=>{state.focus=focusInput.value;saveState(state);});
 
 function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+
+function todayStr(){
+  const n=new Date();
+  return n.getFullYear()+'-'+pad(n.getMonth()+1)+'-'+pad(n.getDate());
+}
+
+function formatDue(dateStr){
+  if(!dateStr) return null;
+  const today=todayStr();
+  if(dateStr===today) return {label:'今日', cls:'today'};
+  if(dateStr<today) return {label:dateStr+' 期限切れ', cls:'overdue'};
+  const d=new Date(dateStr);
+  const days=['日','月','火','水','木','金','土'];
+  return {label:dateStr+' ('+days[d.getDay()]+')', cls:''};
+}
+
 function renderTasks(){
   const list=document.getElementById('taskList');
   list.innerHTML='';
-  if(!state.tasks.length){list.innerHTML='<div class="empty-text" style="font-size:12px;">タスクなし</div>';return;}
+  if(!state.tasks.length){list.innerHTML='<div class="empty-text">タスクなし</div>';return;}
   state.tasks.forEach((t,i)=>{
     const item=document.createElement('div');
     item.className='task-item'+(t.done?' done':'');
-    item.innerHTML=`<div class="task-cb"></div><span class="task-text">${escHtml(t.text)}</span><button class="task-del" title="削除">×</button>`;
+    const due=formatDue(t.date);
+    const dueHtml=due?`<div class="task-due ${due.cls}">📅 ${due.label}</div>`:'';
+    item.innerHTML=`<div class="task-cb"></div><div class="task-body"><div class="task-text">${escHtml(t.text)}</div>${dueHtml}</div><button class="task-del" title="削除">×</button>`;
     item.querySelector('.task-cb').addEventListener('click',e=>{e.stopPropagation();state.tasks[i].done=!state.tasks[i].done;saveState(state);renderTasks();});
     item.querySelector('.task-del').addEventListener('click',e=>{e.stopPropagation();state.tasks.splice(i,1);saveState(state);renderTasks();});
     list.appendChild(item);
   });
 }
 renderTasks();
+
 function addTask(){
   const v=document.getElementById('taskInput').value.trim();
   if(!v)return;
-  state.tasks.push({text:v,done:false});saveState(state);
-  document.getElementById('taskInput').value='';renderTasks();
+  const date=document.getElementById('taskDateInput').value||'';
+  state.tasks.push({text:v,done:false,date});
+  saveState(state);
+  document.getElementById('taskInput').value='';
+  document.getElementById('taskDateInput').value='';
+  renderTasks();
 }
 document.getElementById('addBtn').addEventListener('click',addTask);
 document.getElementById('taskInput').addEventListener('keydown',e=>{if(e.key==='Enter')addTask();});
 
-function togglePanel(id){document.getElementById(id).classList.toggle('open');}
+// ===== OVERLAYS =====
+function openOverlay(id){document.getElementById(id).classList.add('open');}
+function closeOverlay(id){document.getElementById(id).classList.remove('open');}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeOverlay('clockOverlay');closeOverlay('themeOverlay');}});
 
 // ===== THEME =====
-const DEFAULTS={clockFont:"'DM Serif Display', serif",clockSize:56,bodyFont:"'Noto Sans JP', sans-serif",baseSize:14,sidebarWidth:280,bg:'#f5f3ef',text:'#1a1916',accent:'#2d4a3e',white:'#faf9f6'};
+const DEFAULTS={clockFont:"'DM Serif Display', serif",clockSize:56,bodyFont:"'Noto Sans JP', sans-serif",baseSize:14,uiScale:100,sidebarWidth:280,bg:'#f5f3ef',text:'#1a1916',accent:'#2d4a3e',white:'#faf9f6'};
 const PRESETS={
   default:{bg:'#f5f3ef',text:'#1a1916',accent:'#2d4a3e',white:'#faf9f6'},
   dark:   {bg:'#1a1916',text:'#e8e6e0',accent:'#6aab8e',white:'#252320'},
@@ -352,35 +428,39 @@ function applyTheme(t){
   r.style.setProperty('--clock-font',t.clockFont);
   r.style.setProperty('--clock-size',t.clockSize+'px');
   r.style.setProperty('--body-font',t.bodyFont);
-  r.style.setProperty('--base-font-size',t.baseSize+'px');
+  r.style.setProperty('--base-font-size',(t.baseSize*(t.uiScale/100)).toFixed(1)+'px');
   r.style.setProperty('--sidebar-width',t.sidebarWidth+'px');
   r.style.setProperty('--bg',t.bg);
   r.style.setProperty('--bg2',blend(t.bg,t.text,0.06));
   r.style.setProperty('--bg3',blend(t.bg,t.text,0.1));
   r.style.setProperty('--text',t.text);
-  r.style.setProperty('--text2',blend(t.text,t.bg,0.45));
-  r.style.setProperty('--text3',blend(t.text,t.bg,0.65));
+  r.style.setProperty('--text2',blend(t.text,t.bg,0.3));
+  r.style.setProperty('--text3',blend(t.text,t.bg,0.55));
   r.style.setProperty('--accent',t.accent);
   r.style.setProperty('--accent2',blend(t.accent,t.bg,0.3));
-  r.style.setProperty('--border',blend(t.text,t.bg,0.82));
-  r.style.setProperty('--border2',blend(t.text,t.bg,0.75));
+  r.style.setProperty('--border',blend(t.text,t.bg,0.8));
+  r.style.setProperty('--border2',blend(t.text,t.bg,0.72));
   r.style.setProperty('--white',t.white);
   syncUI(t);
 }
+
 function syncUI(t){
-  const cs=document.getElementById('clockSizeSlider');if(cs){cs.value=t.clockSize;document.getElementById('clockSizeVal').textContent=t.clockSize+'px';}
+  const s=id=>document.getElementById(id);
+  if(s('clockSizeSlider')){s('clockSizeSlider').value=t.clockSize;s('clockSizeVal').textContent=t.clockSize+'px';}
+  if(s('baseSizeSlider')){s('baseSizeSlider').value=t.baseSize;s('baseSizeVal').textContent=t.baseSize+'px';}
+  if(s('uiScaleSlider')){s('uiScaleSlider').value=t.uiScale;s('uiScaleVal').textContent=t.uiScale+'%';}
+  if(s('sidebarWidthSlider')){s('sidebarWidthSlider').value=t.sidebarWidth;s('sidebarWidthVal').textContent=t.sidebarWidth+'px';}
   document.querySelectorAll('#clockFontBtns .sp-btn').forEach(b=>b.classList.toggle('active',b.dataset.font===t.clockFont));
-  const bs=document.getElementById('baseSizeSlider');if(bs){bs.value=t.baseSize;document.getElementById('baseSizeVal').textContent=t.baseSize+'px';}
-  const sw=document.getElementById('sidebarWidthSlider');if(sw){sw.value=t.sidebarWidth;document.getElementById('sidebarWidthVal').textContent=t.sidebarWidth+'px';}
   document.querySelectorAll('#bodyFontBtns .sp-btn').forEach(b=>b.classList.toggle('active',b.dataset.font===t.bodyFont));
   const cm={colorBg:'bg',colorText:'text',colorAccent:'accent',colorWhite:'white'};
-  Object.entries(cm).forEach(([id,k])=>{const el=document.getElementById(id);if(el)el.value=t[k];});
+  Object.entries(cm).forEach(([id,k])=>{const el=s(id);if(el)el.value=t[k];});
 }
 
-document.querySelectorAll('#clockFontBtns .sp-btn').forEach(btn=>btn.addEventListener('click',()=>{const th=loadTheme();th.clockFont=btn.dataset.font;saveTheme(th);applyTheme(th);}));
+document.querySelectorAll('#clockFontBtns .sp-btn').forEach(b=>b.addEventListener('click',()=>{const th=loadTheme();th.clockFont=b.dataset.font;saveTheme(th);applyTheme(th);}));
 document.getElementById('clockSizeSlider').addEventListener('input',e=>{const th=loadTheme();th.clockSize=parseInt(e.target.value);saveTheme(th);applyTheme(th);});
-document.querySelectorAll('#bodyFontBtns .sp-btn').forEach(btn=>btn.addEventListener('click',()=>{const th=loadTheme();th.bodyFont=btn.dataset.font;saveTheme(th);applyTheme(th);}));
+document.querySelectorAll('#bodyFontBtns .sp-btn').forEach(b=>b.addEventListener('click',()=>{const th=loadTheme();th.bodyFont=b.dataset.font;saveTheme(th);applyTheme(th);}));
 document.getElementById('baseSizeSlider').addEventListener('input',e=>{const th=loadTheme();th.baseSize=parseInt(e.target.value);saveTheme(th);applyTheme(th);});
+document.getElementById('uiScaleSlider').addEventListener('input',e=>{const th=loadTheme();th.uiScale=parseInt(e.target.value);saveTheme(th);applyTheme(th);});
 document.getElementById('sidebarWidthSlider').addEventListener('input',e=>{const th=loadTheme();th.sidebarWidth=parseInt(e.target.value);saveTheme(th);applyTheme(th);});
 ['colorBg','colorText','colorAccent','colorWhite'].forEach(id=>{
   document.getElementById(id).addEventListener('input',e=>{
@@ -388,8 +468,8 @@ document.getElementById('sidebarWidthSlider').addEventListener('input',e=>{const
     th[cm[id]]=e.target.value;saveTheme(th);applyTheme(th);
   });
 });
-document.querySelectorAll('.sp-preset').forEach(btn=>btn.addEventListener('click',()=>{
-  const th=loadTheme();Object.assign(th,PRESETS[btn.dataset.preset]);saveTheme(th);applyTheme(th);
+document.querySelectorAll('.sp-preset').forEach(b=>b.addEventListener('click',()=>{
+  const th=loadTheme();Object.assign(th,PRESETS[b.dataset.preset]);saveTheme(th);applyTheme(th);
 }));
 function resetTheme(){saveTheme({...DEFAULTS});applyTheme({...DEFAULTS});}
 
@@ -404,16 +484,18 @@ async function startAuth(){
   tokenClient.requestAccessToken();
 }
 function showApp(){document.getElementById('authScreen').style.display='none';document.getElementById('mainApp').style.display='grid';loadMail();loadCalendar();}
-function signOut(){accessToken=null;clearToken();document.getElementById('authScreen').style.display='flex';document.getElementById('mainApp').style.display='none';document.getElementById('mailBody').innerHTML='<div class="loading-text">読み込み中...</div>';document.getElementById('calBody').innerHTML='<div class="loading-text">読み込み中...</div>';}
+function signOut(){accessToken=null;clearToken();document.getElementById('authScreen').style.display='flex';document.getElementById('mainApp').style.display='none';}
 
-// ===== GMAIL =====
+// ===== GMAIL（受信トレイのみ）=====
 async function loadMail(){
   try{
-    const res=await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=8&q=is:unread',{headers:{Authorization:'Bearer '+accessToken}});
+    const res=await fetch('https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=8&q=is:unread+in:inbox',{headers:{Authorization:'Bearer '+accessToken}});
     const data=await res.json();
     if(!data.messages||!data.messages.length){document.getElementById('mailBody').innerHTML='<div class="empty-text">未読メールはありません</div>';document.getElementById('mailBadge').textContent='0';return;}
     document.getElementById('mailBadge').textContent=data.messages.length+(data.resultSizeEstimate>8?'+':'');
-    const details=await Promise.all(data.messages.slice(0,6).map(m=>fetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages/${m.id}?format=metadata&metadataHeaders=From&metadataHeaders=Subject`,{headers:{Authorization:'Bearer '+accessToken}}).then(r=>r.json())));
+    const details=await Promise.all(data.messages.slice(0,6).map(m=>
+      fetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages/${m.id}?format=metadata&metadataHeaders=From&metadataHeaders=Subject`,{headers:{Authorization:'Bearer '+accessToken}}).then(r=>r.json())
+    ));
     document.getElementById('mailBody').innerHTML=details.map(msg=>{
       const h=msg.payload.headers;
       const from=(h.find(x=>x.name==='From')||{}).value||'';
